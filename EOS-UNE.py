@@ -15,6 +15,10 @@ from calm_mode import CalmModeScreen
 from EchOSComunitcator import CommunicateScreen
 from EchOSPlanner import DailyPlannerScreen
 from SafeZone import SafeZoneScreen
+from EchOSShell import LimitedShellScreen
+from kivy.core.window import Window
+from kivy.base import EventLoop
+
 
 # ... rest of your code unchanged ...
 # Window.fullscreen = True  # or 'auto', 'fake', 'borderless'
@@ -79,13 +83,21 @@ class HomeScreen(Screen):
             os.system("sudo reboot")
 class EchOSApp(App):
     def build(self):
-        sm = ScreenManager()
-        sm.add_widget(HomeScreen(name='home'))
-        sm.add_widget(CalmModeScreen(name='calm'))
-        sm.add_widget(CommunicateScreen(name='communicate'))
-        sm.add_widget(DailyPlannerScreen(name='planner'))
-        sm.add_widget(SafeZoneScreen(name='safezone'))
-        return sm
+        self.sm = ScreenManager()
+        self.sm.add_widget(HomeScreen(name='home'))
+        self.sm.add_widget(CalmModeScreen(name='calm'))
+        self.sm.add_widget(CommunicateScreen(name='communicate'))
+        self.sm.add_widget(DailyPlannerScreen(name='planner'))
+        self.sm.add_widget(SafeZoneScreen(name='safezone'))
+        self.sm.add_widget(LimitedShellScreen(name='shell'))
+        return self.sm
+
+    def on_start(self):
+        Window.bind(on_key_down=self.handle_keys)
+
+    def handle_keys(self, window, key, scancode, codepoint, modifiers):
+        if 'ctrl' in modifiers and 'alt' in modifiers and codepoint == 't':
+            self.sm.current = 'shell'
 
 if __name__ == "__main__":
     EchOSApp().run()
