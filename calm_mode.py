@@ -1,3 +1,6 @@
+from kivy.config import Config
+Config.set('kivy', 'video', 'ffpyplayer')
+
 from kivy.uix.screenmanager import Screen
 from kivy.uix.video import Video
 from kivy.core.audio import SoundLoader

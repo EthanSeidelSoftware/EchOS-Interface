@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
+import time
 
 class ApplicationsScreen(Screen):
     def __init__(self, **kwargs):
@@ -39,6 +40,8 @@ class ApplicationsScreen(Screen):
         self.add_widget(self.layout)
 
         self.refresh_app_list()
+        time.sleep(10)
+
 
     def refresh_app_list(self):
         self.app_list_layout.clear_widgets()
@@ -76,3 +79,4 @@ class ApplicationsScreen(Screen):
 
     def go_home(self, *args):
         self.manager.current = 'home'
+        print(0/0)
